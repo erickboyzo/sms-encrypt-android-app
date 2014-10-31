@@ -1,44 +1,22 @@
 package com.example.securesms;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.support.v7.app.ActionBarActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
-public class MainActivity extends ActionBarActivity {
+public class Smsencrypt extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_main);
-		TimerTask ttask = new TimerTask() {
-
-			@Override
-			public void run() {
-				finish();
-				startActivity(new Intent(MainActivity.this, Smsencrypt.class));
-			}
-		};
-
-		// schedule task
-		Timer timer = new Timer();
-		timer.schedule(ttask, 5000);
-
+		setContentView(R.layout.activity_smsencrypt);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.smsencrypt, menu);
 		return true;
 	}
 
