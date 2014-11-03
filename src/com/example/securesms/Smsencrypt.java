@@ -46,6 +46,7 @@ public class Smsencrypt extends ActionBarActivity {
 			smsManager.sendTextMessage(phoneNo, null, message, null, null);
 			Toast.makeText(getApplicationContext(), "SMS sent.",
 					Toast.LENGTH_LONG).show();
+			msgTxt.setText("");
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(),
 					"SMS faild, please try again.", Toast.LENGTH_LONG).show();
