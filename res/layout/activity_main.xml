@@ -9,12 +9,13 @@
     android:background="#3fa9f5"
     tools:context="com.example.securesms.MainActivity" >
 
-    <TextView
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="188dp"
-        android:text="Logo Goes Here" />
+        android:layout_marginTop="162dp"
+        android:src="@drawable/logo" />
 
 </RelativeLayout>

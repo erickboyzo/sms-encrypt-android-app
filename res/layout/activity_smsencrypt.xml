@@ -44,4 +44,23 @@
         android:ems="10"
         android:hint="Message" />
 
+    <TextView
+        android:id="@+id/textMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sendbtn"
+        android:layout_below="@+id/message"
+        android:layout_marginTop="31dp"
+        android:text="message goes here" />
+
+    <TextView
+        android:id="@+id/txtSent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/sendbtn"
+        android:layout_alignTop="@+id/sendbtn"
+        android:layout_marginRight="38dp"
+        android:layout_marginTop="86dp"
+        android:text="Message Sent goes here" />
+
 </RelativeLayout>
