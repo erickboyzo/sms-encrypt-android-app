@@ -3,16 +3,19 @@ package com.example.securesms;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 public class MainActivity extends ActionBarActivity {
-
+	AnimationDrawable faceAnimation;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,6 +23,10 @@ public class MainActivity extends ActionBarActivity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
+		ImageView imgFrame=(ImageView) findViewById(R.id.imageView1);
+		imgFrame.setBackgroundResource(R.drawable.animation);
+		faceAnimation=(AnimationDrawable) imgFrame.getBackground();
+		faceAnimation.start();
 		TimerTask ttask = new TimerTask() {
 
 			@Override
@@ -31,7 +38,8 @@ public class MainActivity extends ActionBarActivity {
 
 		// schedule task
 		Timer timer = new Timer();
-		timer.schedule(ttask, 5000);
+		timer.schedule(ttask, 3000);
+		
 
 	}
 

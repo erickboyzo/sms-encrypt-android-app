@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.securesms"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.securesms"
     android:versionCode="1"
-    android:versionName="1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="10"
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" >
     </uses-permission>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <application
         android:allowBackup="true"
@@ -25,10 +28,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Smsencrypt">
+        <activity android:name=".Smsencrypt" >
+			<intent-filter>
+		        <action android:name="android.intent.action.MAIN" />
+		        <category android:name="android.intent.category.LAUNCHER" />
+		    </intent-filter>
+		         
+		    <intent-filter>
+		        <action android:name="android.nfc.action.TECH_DISCOVERED" />
+		    </intent-filter>
+		 
+		    <meta-data
+		        android:name="android.nfc.action.TECH_DISCOVERED"
+		        android:resource="@xml/nfc_tech_filter" />
         </activity>
-        <receiver android:name=".SMSReceiver"></receiver>
-        
-         </application>
+
+        <receiver android:name=".SMSReceiver" >
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".WritePassword"
+            android:label="@string/title_activity_write_password" >
+        </activity>
+    </application>
 
 </manifest>
