@@ -11,12 +11,5 @@
     <string name="ok_writing">writing .......</string>
     <string name="error_writing">Error during writing</string>
     <string name="ok.detection">OK</string>
-    <string-array name="derivation_methods">
-        <item>Padding key derivation</item>
-        <item>SHA1PRNG key derivation</item>
-        <item>PBKDF2 key derivation</item>
-        <item>PKCS#12 key derivation</item>
- </string-array>
-    
 
 </resources>

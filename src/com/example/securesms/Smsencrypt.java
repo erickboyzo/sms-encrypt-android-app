@@ -5,30 +5,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import java.util.Map;
-
 import javax.crypto.SecretKey;
-
 import android.support.v7.app.ActionBarActivity;
-
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.app.ActionBar;
 import android.app.Activity;
-
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-
 import android.content.Context;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -40,10 +32,8 @@ import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -54,15 +44,10 @@ import android.widget.Toast;
 public class Smsencrypt extends ActionBarActivity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
-
-	String MESSAGE;
-
 	private Button sendSMS;
 	private static EditText msgTxt;
-
 	IntentFilter intentFilter;
 	private ArrayList<Map<String, String>> mPeopleList;
-
 	private SimpleAdapter mAdapter;
 	private AutoCompleteTextView numTxt;
 	public static final String MIME_TEXT_PLAIN = "text/plain";
@@ -72,7 +57,7 @@ public class Smsencrypt extends ActionBarActivity {
 	private Button decryptButton;
 	private Encryptor encryptor;
 	String myMsg;
-	
+
 	abstract class Encryptor {
 		SecretKey key;
 
@@ -131,7 +116,6 @@ public class Smsencrypt extends ActionBarActivity {
 		encryptedText = findById(R.id.textMsg);
 		decryptedText = findById(R.id.txtSent);
 		decryptButton = findById(R.id.decrypt_button);
-
 		// AutoComplete();
 
 		sendSMS.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +164,7 @@ public class Smsencrypt extends ActionBarActivity {
 			public void onClick(View v) {
 				String message = getMessageText();
 				String pass = getPass();
-				//message = extractMessage(message);
+				// message = extractMessage(message);
 
 				decryptMessage(message, pass);
 			}
@@ -281,7 +265,6 @@ public class Smsencrypt extends ActionBarActivity {
 		IntentFilter[] filters = new IntentFilter[1];
 		String[][] techList = new String[][] {};
 
-		// Notice that this is the same filter as in our manifest.
 		filters[0] = new IntentFilter();
 		filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
 		filters[0].addCategory(Intent.CATEGORY_DEFAULT);
@@ -295,7 +278,6 @@ public class Smsencrypt extends ActionBarActivity {
 				techList);
 	}
 
-	
 	public static void stopForegroundDispatch(final Activity activity,
 			NfcAdapter adapter) {
 		adapter.disableForegroundDispatch(activity);
@@ -325,9 +307,10 @@ public class Smsencrypt extends ActionBarActivity {
 			}
 		});
 	}
+
 	/*
-	 * PopulatePeople List needs to be updated to new Loader class
-	 * a solution is in the works
+	 * PopulatePeople List needs to be updated to new Loader class a solution is
+	 * in the works
 	 */
 
 	public void PopulatePeopleList() {
@@ -356,8 +339,7 @@ public class Smsencrypt extends ActionBarActivity {
 								+ " = " + contactId, null, null);
 				while (phones.moveToNext()) {
 
-					// store numbers and display a dialog letting the user
-					// select which.
+					// NEEDS WORK
 					String phoneNumber = phones
 							.getString(phones
 									.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -443,12 +425,10 @@ public class Smsencrypt extends ActionBarActivity {
 		}, new IntentFilter(DELIVERED));
 
 		SmsManager sms = SmsManager.getDefault();
-		// sms.sendTextMessage(theNumber, null, myMsg, sentPI, deliveredPI);
 
 		Log.d("secureSMS: debug", "The number is " + theNumber);
 		Log.d("secureSMS: debug", "The message is " + myMsg);
 
-		
 		try {
 			sms.sendTextMessage(theNumber, null, myMsg, sentPI, deliveredPI);
 		} catch (IllegalArgumentException e) {
@@ -508,15 +488,13 @@ public class Smsencrypt extends ActionBarActivity {
 			// // Ex: launching new activity/screen or show alert message
 			Toast.makeText(Smsencrypt.this, "About is Selected",
 					Toast.LENGTH_SHORT).show();
-			//startActivity(new Intent(Smsencrypt.this, About.class));
+			// startActivity(new Intent(Smsencrypt.this, About.class));
 			return true;
 
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
-
-	
 
 	@SuppressWarnings("unchecked")
 	private <T> T findById(int id) {
@@ -583,7 +561,6 @@ public class Smsencrypt extends ActionBarActivity {
 			Ndef ndef = Ndef.get(tag);
 			Log.d("", "tag gotten");
 			if (ndef == null) {
-				// NDEF is not supported by this Tag.
 				Log.d("", "tag is null");
 				return null;
 			}
@@ -615,16 +592,13 @@ public class Smsencrypt extends ActionBarActivity {
 			byte[] payload = record.getPayload();
 			Log.d("", "got the payload");
 
-			
 			String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8"
 					: "UTF-16";
 			Log.d("", "got the encoding");
 
-			
 			int languageCodeLength = payload[0] & 0063;
 			Log.d("", "get codelength");
 
-			
 			Log.d("", "Try to get the string now");
 			return new String(payload, languageCodeLength + 1, payload.length
 					- languageCodeLength - 1, textEncoding);
