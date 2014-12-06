@@ -25,7 +25,7 @@ public class SMSReceiver extends BroadcastReceiver {
 				str += messages[i].getMessageBody().toString();
 				str += "\n";
 			}
-			// display the message
+			
 			Toast.makeText(context, str, Toast.LENGTH_LONG).show();
 
 			// send a broadcast intent to update the SMS received in a textView
