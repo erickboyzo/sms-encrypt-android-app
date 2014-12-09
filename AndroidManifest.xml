@@ -29,18 +29,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".Smsencrypt" >
-			<intent-filter>
-		        <action android:name="android.intent.action.MAIN" />
-		        <category android:name="android.intent.category.LAUNCHER" />
-		    </intent-filter>
-		         
-		    <intent-filter>
-		        <action android:name="android.nfc.action.TECH_DISCOVERED" />
-		    </intent-filter>
-		 
-		    <meta-data
-		        android:name="android.nfc.action.TECH_DISCOVERED"
-		        android:resource="@xml/nfc_tech_filter" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
 
         <receiver android:name=".SMSReceiver" >
@@ -52,6 +52,10 @@
         <activity
             android:name=".WritePassword"
             android:label="@string/title_activity_write_password" >
+        </activity>
+        <activity
+            android:name=".About"
+            android:label="@string/title_activity_about" >
         </activity>
     </application>
 

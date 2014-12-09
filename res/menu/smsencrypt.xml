@@ -4,26 +4,14 @@
     tools:context="com.example.securesms.Smsencrypt" >
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
-     <item
-        android:id="@+id/action_save"
-        android:orderInCategory="100"
-        android:title="save password"
-        app:showAsAction="never"/>
-     
-    	 <item
         android:id="@+id/action_nfc"
         android:orderInCategory="100"
         android:title="NFC"
         app:showAsAction="never"/>
-    	 
-    	  <item
+    <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:title="About"
         app:showAsAction="never"/>
+
 </menu>

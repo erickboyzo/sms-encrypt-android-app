@@ -116,6 +116,7 @@ public class Smsencrypt extends ActionBarActivity {
 		encryptedText = findById(R.id.textMsg);
 		decryptedText = findById(R.id.txtSent);
 		decryptButton = findById(R.id.decrypt_button);
+
 		// AutoComplete();
 
 		sendSMS.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +144,6 @@ public class Smsencrypt extends ActionBarActivity {
 					@Override
 					protected void updateUi(String ciphertext) {
 						encryptedText.setText(ciphertext);
-						numTxt.setText("");
 						msgTxt.setText("");
 					}
 
@@ -286,11 +286,9 @@ public class Smsencrypt extends ActionBarActivity {
 	public void AutoComplete() {
 		mPeopleList = new ArrayList<Map<String, String>>();
 		PopulatePeopleList();
-
 		mAdapter = new SimpleAdapter(this, mPeopleList, R.layout.custcontview,
 				new String[] { "Name", "Phone" }, new int[] { R.id.ccontName,
 						R.id.ccontNo });
-
 		numTxt.setAdapter(mAdapter);
 		numTxt.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -370,7 +368,6 @@ public class Smsencrypt extends ActionBarActivity {
 		}
 		people.close();
 
-		startManagingCursor(people);
 	}
 
 	protected void sendMsg(String theNumber, final String myMsg) {
@@ -391,7 +388,6 @@ public class Smsencrypt extends ActionBarActivity {
 							Toast.LENGTH_LONG).show();
 					TextView sentText = (TextView) findViewById(R.id.txtSent);
 					sentText.setText(myMsg);
-					numTxt.setText("");
 					msgTxt.setText("");
 					break;
 				case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
@@ -484,11 +480,7 @@ public class Smsencrypt extends ActionBarActivity {
 			return true;
 
 		case R.id.action_about:
-			// // Single menu item is selected do something
-			// // Ex: launching new activity/screen or show alert message
-			Toast.makeText(Smsencrypt.this, "About is Selected",
-					Toast.LENGTH_SHORT).show();
-			// startActivity(new Intent(Smsencrypt.this, About.class));
+			startActivity(new Intent(Smsencrypt.this, About.class));
 			return true;
 
 		}

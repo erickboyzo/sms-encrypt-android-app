@@ -11,5 +11,6 @@
     <string name="ok_writing">writing .......</string>
     <string name="error_writing">Error during writing</string>
     <string name="ok.detection">OK</string>
+    <string name="title_activity_about">About Secure SMS</string>
 
 </resources>

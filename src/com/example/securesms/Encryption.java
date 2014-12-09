@@ -9,24 +9,17 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
 import android.util.Base64;
 import android.util.Log;
 
 public class Encryption {
+
 	private static final String TAG = Encryption.class.getSimpleName();
-
-	public static final String PKCS12_DERIVATION_ALGORITHM = "PBEWITHSHA256AND256BITAES-CBC-BC";
-	public static final String PBKDF2_DERIVATION_ALGORITHM = "PBKDF2WithHmacSHA1";
 	private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
-
 	private static String DELIMITER = "]";
-
 	private static int KEY_LENGTH = 256;
-	// minimum values recommended by PKCS#5, increase as necessary
 	private static int ITERATION_COUNT = 1000;
 	private static final int PKCS5_SALT_LENGTH = 8;
-
 	private static SecureRandom random = new SecureRandom();
 
 	protected Encryption() {
@@ -36,11 +29,7 @@ public class Encryption {
 		try {
 			long start = System.currentTimeMillis();
 			byte[] keyBytes = new byte[KEY_LENGTH / 8];
-			// explicitly fill with zeros
 			Arrays.fill(keyBytes, (byte) 0x0);
-
-			// if password is shorter then key length, it will be zero-padded
-			// to key length
 			byte[] passwordBytes = password.getBytes("UTF-8");
 			int length = passwordBytes.length < keyBytes.length ? passwordBytes.length
 					: keyBytes.length;
