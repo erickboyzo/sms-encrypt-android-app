@@ -34,7 +34,6 @@ public class WritePassword extends ActionBarActivity {
 	Tag mytag;
 	Context ctx;
 	Tag detectedTag;
-	TextView txtType, txtSize, txtWrite, txtRead;
 	NfcAdapter nfcAdapter;
 	IntentFilter[] readTagFilters;
 
@@ -88,13 +87,13 @@ public class WritePassword extends ActionBarActivity {
 
 		NdefRecord[] records = { createRecord(text) };
 		NdefMessage message = new NdefMessage(records);
-		// Get an instance of Ndef for the tag.
+	
 		Ndef ndef = Ndef.get(tag);
-		// Enable I/O
+		
 		ndef.connect();
-		// Write the message
+		
 		ndef.writeNdefMessage(message);
-		// Close the connection
+		
 		ndef.close();
 	}
 
