@@ -52,8 +52,8 @@ public class Smsencrypt extends ActionBarActivity {
 	private AutoCompleteTextView numTxt;
 	public static final String MIME_TEXT_PLAIN = "text/plain";
 	private EditText passwordText;
-	private TextView encryptedText;
-	private TextView decryptedText;
+	private TextView messageRecieved;
+	private TextView messageSent;
 	private Button decryptButton;
 	private Encryptor encryptor;
 	String myMsg;
@@ -75,6 +75,8 @@ public class Smsencrypt extends ActionBarActivity {
 			return Encryption.toHex(key.getEncoded());
 		}
 	}
+	
+
 
 	private final Encryptor PADDING_ENCRYPTOR = new Encryptor() {
 
@@ -108,15 +110,17 @@ public class Smsencrypt extends ActionBarActivity {
 
 		intentFilter = new IntentFilter();
 		intentFilter.addAction("SMS_RECEIVED_ACTION");
+		registerReceiver(intentReceiver, intentFilter);
 		sendSMS = (Button) findViewById(R.id.sendbtn);
 		msgTxt = (EditText) findViewById(R.id.message);
 		numTxt = (AutoCompleteTextView) findViewById(R.id.number);
 		encryptor = PADDING_ENCRYPTOR;
 		passwordText = findById(R.id.password);
-		encryptedText = findById(R.id.textMsg);
-		decryptedText = findById(R.id.txtSent);
+		messageRecieved = findById(R.id.recieved);
+		messageSent = findById(R.id.sent);
 		decryptButton = findById(R.id.decrypt_button);
-		// AutoComplete();
+
+		//AutoComplete();
 
 		sendSMS.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -142,8 +146,7 @@ public class Smsencrypt extends ActionBarActivity {
 
 					@Override
 					protected void updateUi(String ciphertext) {
-						encryptedText.setText(ciphertext);
-						numTxt.setText("");
+						messageSent.setText(ciphertext);
 						msgTxt.setText("");
 					}
 
@@ -164,12 +167,13 @@ public class Smsencrypt extends ActionBarActivity {
 			public void onClick(View v) {
 				String message = getMessageText();
 				String pass = getPass();
-				// message = extractMessage(message);
+				 //message = extractMessage(message);
 
 				decryptMessage(message, pass);
 			}
 		});
 		handleIntent(getIntent());
+
 
 	}
 
@@ -193,7 +197,7 @@ public class Smsencrypt extends ActionBarActivity {
 			}
 
 			private void setMessage(String plaintext) {
-				decryptedText.setText(plaintext);
+				messageRecieved.setText(plaintext);
 			}
 		}.execute();
 	}
@@ -206,7 +210,7 @@ public class Smsencrypt extends ActionBarActivity {
 	}
 
 	private String getMessageText() {
-		return encryptedText.getText().toString();
+		return messageRecieved.getText().toString();
 	}
 
 	private String getPass() {
@@ -215,6 +219,7 @@ public class Smsencrypt extends ActionBarActivity {
 
 	public static void setIncomingMessage(String aMessage) {
 		msgTxt.setText(aMessage);
+		
 	}
 
 	@Override
@@ -282,17 +287,17 @@ public class Smsencrypt extends ActionBarActivity {
 			NfcAdapter adapter) {
 		adapter.disableForegroundDispatch(activity);
 	}
+	
 
 	public void AutoComplete() {
 		mPeopleList = new ArrayList<Map<String, String>>();
 		PopulatePeopleList();
-
 		mAdapter = new SimpleAdapter(this, mPeopleList, R.layout.custcontview,
 				new String[] { "Name", "Phone" }, new int[] { R.id.ccontName,
 						R.id.ccontNo });
-
 		numTxt.setAdapter(mAdapter);
 		numTxt.setOnItemClickListener(new OnItemClickListener() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void onItemClick(AdapterView<?> av, View arg1, int index,
 					long arg3) {
@@ -339,7 +344,7 @@ public class Smsencrypt extends ActionBarActivity {
 								+ " = " + contactId, null, null);
 				while (phones.moveToNext()) {
 
-					// NEEDS WORK
+					// Needs Work
 					String phoneNumber = phones
 							.getString(phones
 									.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -362,7 +367,7 @@ public class Smsencrypt extends ActionBarActivity {
 					else
 						NamePhoneType.put("Type", "Other");
 
-					// Then add this map to the list.
+					
 					mPeopleList.add(NamePhoneType);
 				}
 				phones.close();
@@ -370,7 +375,6 @@ public class Smsencrypt extends ActionBarActivity {
 		}
 		people.close();
 
-		startManagingCursor(people);
 	}
 
 	protected void sendMsg(String theNumber, final String myMsg) {
@@ -389,10 +393,9 @@ public class Smsencrypt extends ActionBarActivity {
 				case Activity.RESULT_OK:
 					Toast.makeText(getBaseContext(), "SMS Sent",
 							Toast.LENGTH_LONG).show();
-					TextView sentText = (TextView) findViewById(R.id.txtSent);
+					TextView sentText = (TextView) findViewById(R.id.sent);
 					sentText.setText(myMsg);
-					numTxt.setText("");
-					msgTxt.setText("");
+					//msgTxt.setText("");
 					break;
 				case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
 					Toast.makeText(getBaseContext(), "Generic Failure",
@@ -442,11 +445,14 @@ public class Smsencrypt extends ActionBarActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 
-			TextView inTxt = (TextView) findViewById(R.id.textMsg);
+			TextView inTxt = (TextView) findViewById(R.id.recieved);
 			inTxt.setText(intent.getExtras().getString("sms"));
 
 		}
 	};
+
+
+	
 
 	@Override
 	protected void onResume() {
@@ -484,11 +490,7 @@ public class Smsencrypt extends ActionBarActivity {
 			return true;
 
 		case R.id.action_about:
-			// // Single menu item is selected do something
-			// // Ex: launching new activity/screen or show alert message
-			Toast.makeText(Smsencrypt.this, "About is Selected",
-					Toast.LENGTH_SHORT).show();
-			// startActivity(new Intent(Smsencrypt.this, About.class));
+			startActivity(new Intent(Smsencrypt.this, About.class));
 			return true;
 
 		}
@@ -546,11 +548,7 @@ public class Smsencrypt extends ActionBarActivity {
 
 	}
 
-	private void clear() {
-		encryptedText.setText("");
-		decryptedText.setText("");
-
-	}
+	
 
 	private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 		@Override
