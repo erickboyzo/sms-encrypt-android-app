@@ -57,6 +57,7 @@ public class Smsencrypt extends ActionBarActivity {
 	private Button decryptButton;
 	private Encryptor encryptor;
 	String myMsg;
+	private int loaded;
 
 	abstract class Encryptor {
 		SecretKey key;
@@ -104,10 +105,10 @@ public class Smsencrypt extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_smsencrypt);
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3fa9f5")));
-
 		intentFilter = new IntentFilter();
 		intentFilter.addAction("SMS_RECEIVED_ACTION");
 		registerReceiver(intentReceiver, intentFilter);
@@ -119,8 +120,12 @@ public class Smsencrypt extends ActionBarActivity {
 		messageRecieved = findById(R.id.recieved);
 		messageSent = findById(R.id.sent);
 		decryptButton = findById(R.id.decrypt_button);
+		AutoComplete();
+			
 
-		//AutoComplete();
+		
+
+		
 
 		sendSMS.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -308,6 +313,7 @@ public class Smsencrypt extends ActionBarActivity {
 					String key = (String) myVeryOwnIterator.next();
 					String value = (String) map.get(key);
 					numTxt.setText(value);
+					loaded=+1;
 				}
 			}
 		});
