@@ -76,7 +76,7 @@ public class Smsencrypt extends ActionBarActivity {
 			return Encryption.toHex(key.getEncoded());
 		}
 	}
-	
+
 
 
 	private final Encryptor PADDING_ENCRYPTOR = new Encryptor() {
@@ -105,7 +105,7 @@ public class Smsencrypt extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_smsencrypt);
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3fa9f5")));
@@ -121,11 +121,11 @@ public class Smsencrypt extends ActionBarActivity {
 		messageSent = findById(R.id.sent);
 		decryptButton = findById(R.id.decrypt_button);
 		AutoComplete();
-			
 
-		
 
-		
+
+
+
 
 		sendSMS.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -224,7 +224,7 @@ public class Smsencrypt extends ActionBarActivity {
 
 	public static void setIncomingMessage(String aMessage) {
 		msgTxt.setText(aMessage);
-		
+
 	}
 
 	@Override
@@ -458,7 +458,7 @@ public class Smsencrypt extends ActionBarActivity {
 	};
 
 
-	
+
 
 	@Override
 	protected void onResume() {
